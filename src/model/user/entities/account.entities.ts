@@ -1,4 +1,101 @@
-import { Entity } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+export enum AccountStatus {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+  LOCKED = 'locked',
+  DISABLED = 'disabled',
+  DELETED = 'deleted',
+}
 
 @Entity('account')
-export class AccountEntity {}
+export class AccountEntity {
+  @PrimaryGeneratedColumn('uuid')
+  uuid: string;
+
+  @Column({
+    type: 'varchar',
+  })
+  nameTh: string;
+
+  @Column({
+    type: 'varchar',
+  })
+  lastNameTh: string;
+
+  @Column({
+    type: 'varchar',
+  })
+  nameEn: string;
+
+  @Column({
+    type: 'varchar',
+  })
+  lastNameEn: string;
+
+  @Column({
+    type: 'varchar',
+  })
+  phoneNumber: string;
+
+  @Column({
+    type: 'varchar',
+  })
+  email: string;
+
+  @Column({
+    type: 'varchar',
+    nullable: true,
+    default: null,
+  })
+  password: string;
+
+  @Column({
+    type: 'enum',
+    enum: AccountStatus,
+    default: AccountStatus.INACTIVE,
+  })
+  status: AccountStatus;
+
+  @Column({
+    type: 'timestamp',
+    nullable: true,
+  })
+  createdAt: Date;
+
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  createdBy: string;
+
+  @Column({
+    type: 'timestamp',
+    nullable: true,
+  })
+  updatedAt: Date;
+
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  updatedBy: string;
+
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  token: string;
+}
+
+export interface AccountCreate {
+  nameTh: string;
+  lastNameTh: string;
+  nameEn: string;
+  lastNameEn: string;
+  phoneNumber: string;
+  email: string;
+  password: string;
+}
+
+export default AccountEntity;
