@@ -15,6 +15,10 @@ export class AccountService {
     return this.accountRepository.save(data);
   }
 
+  public findOne(uuid: string) {
+    return this.accountRepository.findOne({ where: { uuid } });
+  }
+
   public delete(uuid: string) {
     return this.accountRepository.delete({ uuid });
   }
