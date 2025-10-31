@@ -86,16 +86,40 @@ export class AccountEntity {
     nullable: true,
   })
   token: string;
+
+  public create(params: AccountCreateParams) {
+    this.nameTh = params.nameTh;
+    this.lastNameTh = params.lastNameTh;
+    this.nameEn = params.nameEn;
+    this.lastNameEn = params.lastNameEn;
+    this.phoneNumber = params.phoneNumber;
+    this.email = params.email;
+    this.createdBy = params.createdBy;
+    this.token = params.token;
+  }
+
+  public toResponse() {
+    return {
+      uuid: this.uuid,
+      nameTh: this.nameTh,
+      lastNameTh: this.lastNameTh,
+      nameEn: this.nameEn,
+      lastNameEn: this.lastNameEn,
+      phoneNumber: this.phoneNumber,
+      email: this.email,
+    };
+  }
 }
 
-export interface AccountCreate {
+export interface AccountCreateParams {
   nameTh: string;
   lastNameTh: string;
   nameEn: string;
   lastNameEn: string;
   phoneNumber: string;
   email: string;
-  password: string;
+  createdBy: string;
+  token: string;
 }
 
 export default AccountEntity;

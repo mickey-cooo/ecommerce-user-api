@@ -1,9 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import helmet from 'helmet';
+import { LoggerMonitors } from './utils/logger.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const logger = new LoggerMonitors();
+  const app = await NestFactory.create(AppModule, {
+    logger: logger,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Api Documentation')
@@ -15,6 +20,9 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory());
 
-  await app.listen(process.env.PORT ?? 8080);
+  app.use(helmet());
+  const port = process.env.PORT || 8080;
+  await app.listen(port);
+  logger.log(`Server is running on port ${port}`, 'Bootstrap');
 }
 bootstrap();
