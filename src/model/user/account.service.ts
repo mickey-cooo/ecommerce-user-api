@@ -19,6 +19,10 @@ export class AccountService {
     return this.accountRepository.findOne({ where: { uuid } });
   }
 
+  public findByEmail(email: string) {
+    return this.accountRepository.findOneBy({ email });
+  }
+
   public delete(uuid: string) {
     return this.accountRepository.delete({ uuid });
   }
